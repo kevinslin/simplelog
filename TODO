@@ -1,0 +1,13 @@
+
+1.
+Refresh
+"""
+Clear the simplelog.log file 
+"""
+
+
+Minor:
+
+Tuple representation of level:
+>>> sl.level 
+>>> (20, 'INFO')
