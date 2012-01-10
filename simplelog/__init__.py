@@ -1,3 +1,4 @@
+#!/usr/bin/env python2.7
 # Copyright: This module has been placed under the public license
 
 """
@@ -52,17 +53,17 @@ def _initialize():
         env['LOG_FORMATTER'] = logging.Formatter(fmt = SIMPLE_FORMAT,
                                     datefmt = "%H:%m.%S")
 
-
-
 _initialize()
 # Configure Logger
 logger = logging.getLogger("simplelog")
 logger.setLevel(env['LOG_LEVEL'])
 handler_file = logging.FileHandler(filename = env['LOG_FILE'])
-
 handler_file.setFormatter(env['LOG_FORMATTER'])
+handler_stream = logging.StreamHandler()
+handler_stream.setFormatter(env['LOG_FORMATTER'])
 
 logger.addHandler(handler_file)
+logger.addHandler(handler_stream)
 
 def log(msg, level = None):
     """
@@ -73,8 +74,16 @@ def log(msg, level = None):
         level = env['LOG_LEVEL']
     logger.log(level, msg)
 
-#BOND
 
+# Filters
+class NullFilter(logging.Filter):
+    def filter(self, record):
+        return False
+
+
+
+if __name__ == "__main__":
+    foo()
 ######################################################################
 class SimpleLog(logging.Logger):
     """

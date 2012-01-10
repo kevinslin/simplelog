@@ -1,47 +1,38 @@
-import simplelog
 import unittest
 
-SL = simplelog.sl
+from simplelog import log
+from simplelog.decorators import quiet
+#TODO: wipe simplelog, make some logs and check the output
+
+
+def foo():
+    return 'foo'
 
 class TestSimpleLog(unittest.TestCase):
     def setUp(self):
-        global SL
-        self.sl = simplelog.sl
+        pass
 
-    def test_disable(self):
+    def test(self):
         """
         Remove all handlers from simplelog
         """
-        self.sl.disable()
-        self.assertTrue(self.sl.handlers == [])
-
-    def test_set_level(self):
-        SL.debug("hello")
-        # Should show up
-        SL.setLevel(20)
-        SL.debug("foo")
-        # Should not show up
-        SL.disable()
-        SL.debug("foo")
-        # Should not show up
-        SL.enable()
-        SL.debug("foo")
-        # None
-        SL.info("foo")
-        # "foo"
-
-
-@simplelog.dump_func()
-def func1(arg1, arg2):
-    """
-    nul op func
-    """
-    return
+        pass
 
 class TestDecorators(unittest.TestCase):
     def setUp(self):
-        self.sl = simplelog.sl
+        pass
+
+    def test_quiet(self):
+        log('this is visible')
+
+    @quiet()
+    def test_no_quiet(self):
+        log('this is not visible')
+
 
     def test_dump_func(self):
         return
+
+if __name__ == '__main__':
+    unittest.main()
 

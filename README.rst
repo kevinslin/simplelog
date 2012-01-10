@@ -4,6 +4,11 @@ Simplelog Class Methods:
 log(msg, level = None)
   Log message to /tmp/simplelog. Level defaults to env['LOG_LEVEL']
 
+Usage:
+======
+from simplelog import log
+
+log('Simplelog is running')
 
 
 ######################################################

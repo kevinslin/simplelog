@@ -1,13 +1,15 @@
-
-1.
+M.1.
 Refresh
 """
-Clear the simplelog.log file 
+Clear the simplelog.log file
 """
 
+M.2.
+Quiet function
+- no stream handler for duration of the function
 
-Minor:
 
+m.1
 Tuple representation of level:
->>> sl.level 
+>>> sl.level
 >>> (20, 'INFO')

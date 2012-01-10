@@ -3,12 +3,29 @@ This module holds decorators used for simplelog.
 """
 
 import functools
+import logging
 import sys
 
 import simplelog
-#sl = simplelog.sl #TEMP
 
 __all__ = ["dump_func", "enable"]
+
+
+def quiet():
+    """Disables stream ahandler"""
+    logger = logging.getLogger("simplelog")
+    f = simplelog.NullFilter()
+    logger.addFilter(f)
+    def decorator(function):
+        @functools.wraps(afunc)
+        def wrapper(*args, **kwargs):
+            return afunc(*args, **kwargs)
+        return wrapper
+    # logger.removeFilter(f)
+    return deocrator
+
+
+
 
 def enable(sl):
     "Enables simplelog inside the scope of a function call"
@@ -48,7 +65,7 @@ def dump_func(level = None, func_name_only = False, pretty = True):
     #TODO: make the level actually do something useful
     #TODO: don't return result in func_name_only
     def decorator(function):
-        @functools.wraps(function) #propagate docstring to children 
+        @functools.wraps(function) #propagate docstring to children
         def wrapper(*args, **kwargs):
 
             log = ""
@@ -56,10 +73,10 @@ def dump_func(level = None, func_name_only = False, pretty = True):
             log += "function: " + func_name + "\n"
             if not func_name_only:
                 log += "args: "
-                log += ", ".join(["{0!r}".format(a) for a in args]) 
+                log += ", ".join(["{0!r}".format(a) for a in args])
                 log += "\n"
-                log += "kwargs: " 
-                log += ", ".join(["{0!r}".format(a) for a in kwargs]) 
+                log += "kwargs: "
+                log += ", ".join(["{0!r}".format(a) for a in kwargs])
                 log += "\n"
             result = exception = None
 
@@ -68,7 +85,7 @@ def dump_func(level = None, func_name_only = False, pretty = True):
                 result = function(*args, **kwargs)
             except Exception as err:
                 exception = err
-            finally: 
+            finally:
                 if exception is None:
                     log += ("result: " + str(result))
                 else:
@@ -90,7 +107,7 @@ def dump_func(level = None, func_name_only = False, pretty = True):
                     sl.quiet()
                     sl.debug(log)
                     pass
-                finally:    
+                finally:
                     if exception: #FIXME: put somewhere better
                         raise exception
                     return result

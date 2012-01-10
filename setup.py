@@ -9,15 +9,12 @@ URL = ""
 VERSION = __import__(PACKAGE).__version__
 
 
-#with open("README.rst") as fh:
-        #long_description = fh.read()
-
 setup(name = 'simplelog',
-      version = VERSION,              
+      version = VERSION,
       description = 'Simple interface for logging in python',
       author = 'Kevin S Lin',
       author_email = 'kevinslin8@gmail.com',
       url = 'kevinslin.com',
-      long_description = DESCRIPTION, 
+      long_description = DESCRIPTION,
       packages = ['simplelog']
-      )   
+      )
