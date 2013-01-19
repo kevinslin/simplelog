@@ -6,25 +6,42 @@ import functools
 import logging
 import sys
 
-import simplelog
-
-__all__ = ["dump_func", "enable"]
-
-
-def quiet():
-    """Disables stream ahandler"""
-    logger = logging.getLogger("simplelog")
-    f = simplelog.NullFilter()
-    logger.addFilter(f)
-    def decorator(function):
-        @functools.wraps(afunc)
-        def wrapper(*args, **kwargs):
-            return afunc(*args, **kwargs)
-        return wrapper
-    # logger.removeFilter(f)
-    return deocrator
+from settings import *
+from filters import NullFilter, QuietUnlessExceptionFilter
+from simplelog import SL
+from simpleparse import colors
 
 
+
+def quiet(dump_on_exception = True):
+    """
+    Don't show logs
+
+    :param: dump logs on exception, default is True
+    """
+    logger = SL
+    f = QuietUnlessExceptionFilter()
+    def decorator(fn):
+        @functools.wraps(fn)
+        def wrapped(*args, **kwargs):
+            SL.addFilter(f)
+            res = None
+            try:
+                res = fn(*args, **kwargs)
+            except Exception:
+                if dump_on_exception:
+                    print(colors.red("Got exception"))
+                    for r in f.records:
+                        msg = "[%s]" % r.levelname
+                        msg += " : %s" % r.msg
+                        print(msg)
+                    print(colors.red("end of logs"))
+                raise
+            finally:
+                SL.removeFilter(f)
+            return res
+        return wrapped
+    return decorator
 
 
 def enable(sl):
@@ -33,8 +50,6 @@ def enable(sl):
     def decorator(function):
         @functools.wraps(function)
         def wrapper(*args, **kwargs):
-            #OPTIMIZE: use lambda
-            "Just returns the function. Maybe use lambda function?"
             result = function(*args, **kwargs)
             return result
         return wrapper
@@ -55,6 +70,7 @@ def disable(sl):
         return wrapper
         sl.enable()
     return decorator
+
 
 def dump_func(level = None, func_name_only = False, pretty = True):
     """
@@ -113,5 +129,3 @@ def dump_func(level = None, func_name_only = False, pretty = True):
                     return result
         return wrapper
     return decorator
-
-
