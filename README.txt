@@ -1,11 +1,22 @@
-
-Simplelog Class Methods:
-========================
+Methods:
+--------
 log(msg, level = None)
   Log message to /tmp/simplelog. Level defaults to env['LOG_LEVEL']
 
+Decorators:
+------------
+dump_func
+    Dump internal state of function
+
+#TODO: need to do this
+quiet(dump_on_exception=True)
+    """
+    :param dump_on_exception: show log messages if exception
+    """
+    Disable all logging
+
 Usage:
-======
+------
 from simplelog import log
 
 log('Simplelog is running')
