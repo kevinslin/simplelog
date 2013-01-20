@@ -5,11 +5,29 @@ This module holds decorators used for simplelog.
 import functools
 import logging
 import sys
+import pdb as _pdb
 
 from settings import *
 from filters import NullFilter, QuietUnlessExceptionFilter
 from simplelog import SL
 from simpleparse import colors
+
+
+def pdb(fn):
+    """
+    Starts pdb on exception
+    """
+    def wrapper(*args, **kwargs):
+        res = None
+        try:
+            res = fn(*args, **kwargs)
+        except Exception:
+            _type, _value, _tb = sys.exc_info()
+            print(_type)
+            print(_value)
+            _pdb.post_mortem(_tb)
+        return res
+    return wrapper
 
 
 
