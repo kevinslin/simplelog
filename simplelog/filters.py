@@ -6,7 +6,6 @@ class NullFilter(logging.Filter):
     Null Filter
     """
     def filter(self, record):
-        print("filter")
         return False
 
 class QuietUnlessExceptionFilter(logging.Filter):
@@ -14,6 +13,5 @@ class QuietUnlessExceptionFilter(logging.Filter):
         self.records = []
 
     def filter(self, record):
-        print("filtered")
         self.records.append(record)
         return False
