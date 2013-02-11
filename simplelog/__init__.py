@@ -12,6 +12,8 @@ import logging.handlers
 import os
 from settings import *
 
+__version__ = "0.2.1"
+
 
 class SimpleLog(logging.Logger):
     """
@@ -120,6 +122,7 @@ class SimpleLog(logging.Logger):
 ### Convenience
 SL = sl = SimpleLog(path="/tmp/simplelog.log", level = logging.INFO, force = True)
 
+#TODO: support *args
 def log(msg, level = None):
     """
     Log the output. Nothing more, nothing less
