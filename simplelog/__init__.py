@@ -137,7 +137,7 @@ def log(msg, level = None):
     """
     Log the output. Nothing more, nothing less
     """
-    level = SL.level
+    if not level: level = SL.level
     SL.log(level, msg)
 
 def debug(msg):

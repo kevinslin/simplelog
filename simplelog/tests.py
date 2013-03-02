@@ -10,15 +10,15 @@ def foo():
 
 class TestSimpleLog(unittest.TestCase):
     def setUp(self):
-        pass
+        SL.setLevel(DEBUG)
 
     def test(self):
         # Make sure nothing is throwing an exception
-        debug("foo")
-        info("foo")
-        warning("foo")
-        error("foo")
-        critical("foo")
+        debug("debug foo")
+        info("info foo")
+        warning("warn foo")
+        error("error foo")
+        critical("crit foo")
         self.assertTrue(True);
 
 class TestDecorators(unittest.TestCase):
