@@ -146,11 +146,11 @@ def debug(msg):
 
 def info(msg):
     level = logging.INFO
-    log(level, msg)
+    log(msg, level)
 
 def error(msg):
     level = logging.ERROR
-    log(level, msg)
+    log(msg, level)
 
 def warning(msg):
     level = logging.WARNING
