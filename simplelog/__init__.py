@@ -75,6 +75,16 @@ class SimpleLog(logging.Logger):
         for hndl in self.handlers:
             hndl.setLevel(level)
 
+    def setFormatter(self, format):
+        """
+        Sets format in each handler
+        :params format: either a Formatter object or format string
+        """
+        if not isinstance(format, logging.Formatter):
+            format = logging.Formatter(format, FMT_DATETIME)
+        for hndl in self.handlers:
+            hndl.setFormatter(format)
+
     def disable(self):
         """
         Disable simplelog by getting rid of all handlers
