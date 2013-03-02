@@ -5,6 +5,7 @@ This module holds decorators used for simplelog.
 import functools
 import logging
 import sys
+import traceback
 import pdb as _pdb
 
 from settings import *
@@ -17,6 +18,7 @@ def pdb(fn):
     """
     Starts pdb on exception
     """
+    @functools.wraps(fn)
     def wrapper(*args, **kwargs):
         res = None
         try:
@@ -26,6 +28,25 @@ def pdb(fn):
             print(_type)
             print(_value)
             _pdb.post_mortem(_tb)
+        return res
+    return wrapper
+
+
+def log_exception(fn):
+    """
+    Logs all exceptions
+    """
+    @functools.wraps(fn)
+    def wrapper(*args, **kwargs):
+        res = None
+        try:
+            res = fn(*args, **kwargs)
+        except Exception:
+            ename, evalue, etb = sys.exc_info()
+            print("got an error")
+            SL.error(ename)
+            SL.error(evalue)
+            SL.error("\n".join(traceback.format_tb(etb)))
         return res
     return wrapper
 

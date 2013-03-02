@@ -1,6 +1,6 @@
 import unittest
 
-from simplelog import log
+from simplelog import *
 from simplelog.decorators import quiet
 #TODO: wipe simplelog, make some logs and check the output
 
@@ -13,10 +13,13 @@ class TestSimpleLog(unittest.TestCase):
         pass
 
     def test(self):
-        """
-        Remove all handlers from simplelog
-        """
-        pass
+        # Make sure nothing is throwing an exception
+        debug("foo")
+        info("foo")
+        warning("foo")
+        error("foo")
+        critical("foo")
+        self.assertTrue(True);
 
 class TestDecorators(unittest.TestCase):
     def setUp(self):
@@ -35,4 +38,3 @@ class TestDecorators(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-

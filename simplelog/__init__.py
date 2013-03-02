@@ -127,6 +127,25 @@ def log(msg, level = None):
     """
     Log the output. Nothing more, nothing less
     """
-    global SL
     level = SL.level
     SL.log(level, msg)
+
+def debug(msg):
+    level = logging.DEBUG
+    log(msg, level)
+
+def info(msg):
+    level = logging.INFO
+    log(level, msg)
+
+def error(msg):
+    level = logging.ERROR
+    log(level, msg)
+
+def warning(msg):
+    level = logging.WARNING
+    log(msg, level)
+
+def critical(msg):
+    level = logging.CRITICAL
+    log(msg, level)
