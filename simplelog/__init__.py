@@ -127,17 +127,20 @@ class SimpleLog(logging.Logger):
         return self.config
 
 ### Convenience
-SL = None
+simplelog = SL = None
+
+def initialize():
+    """ initialize global SL object """
+    global SL
+    if SL is None:
+        SL = SimpleLog(path="/tmp/simplelog.log", level = logging.INFO, force = True)
 
 #TODO: support *args
 def log(msg, level = None):
     """
     Log the output. Nothing more, nothing less
     """
-    global SL
-    if SL is None:
-        SL = SimpleLog(path="/tmp/simplelog.log", level = logging.INFO, force = True)
-
+    initialize()
     if not level: level = SL.level
     SL.log(level, msg)
 
