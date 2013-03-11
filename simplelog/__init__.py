@@ -42,15 +42,13 @@ class SimpleLog(logging.Logger):
             path = "/tmp/simplelog.log"
         # delete path if it exists
         try:
-            if (force): os.remove("path")
+            if (force): os.remove(path)
         except OSError:
             pass
 
         #State
         self.path = path
         self.quiet = quiet
-        #TODO: what?
-        #self.sl_debug = logging.getLogger('alog')
 
         #Handlers
         if not quiet:
@@ -63,7 +61,6 @@ class SimpleLog(logging.Logger):
         self.addHandler(fh) #TODO: don't have this here
         self.setLevel(level)
 
-        #self.sl_debug.addHandler(fh)
 
     def setLevel(self, level):
         """
@@ -130,13 +127,17 @@ class SimpleLog(logging.Logger):
         return self.config
 
 ### Convenience
-SL = sl = SimpleLog(path="/tmp/simplelog.log", level = logging.INFO, force = True)
+SL = None
 
 #TODO: support *args
 def log(msg, level = None):
     """
     Log the output. Nothing more, nothing less
     """
+    global SL
+    if SL is None:
+        SL = SimpleLog(path="/tmp/simplelog.log", level = logging.INFO, force = True)
+
     if not level: level = SL.level
     SL.log(level, msg)
 
